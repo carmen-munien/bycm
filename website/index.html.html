@@ -1,0 +1,406 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BYCM - CM Face Mist | Simply Existing, Effortlessly Glowing</title>
+    
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Configuration for Brand Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'brand-background': '#D2CBC1', // Main page background
+                        'brand-accent': '#B8B0A7',     // Button/card accent background
+                        'brand-text': '#000000',       // Black text
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <style>
+        /* Set the text colour and ensure smooth transitions for collapsibles */
+        body {
+            color: #000000;
+        }
+        /* Style for the collapsible content area */
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+        .collapsible-content.active {
+            max-height: 500px; /* A large enough value to show all content */
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+        /* Style for the loading spinner */
+        .loader {
+            border: 4px solid #f3f3f3; /* Light grey */
+            border-top: 4px solid #B8B0A7; /* Brand accent color */
+            border-radius: 50%;
+            width: 1rem;
+            height: 1rem;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-brand-background">
+
+    <main class="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        
+        <!-- Logo and Tagline Section -->
+        <header class="text-center mb-12">
+            <!-- IMPORTANT: Image path updated for deployment (assumes images/bycm-logo.png exists) -->
+            <img 
+                src="images/bycm-logo.png" 
+                alt="BYCM Logo" 
+                class="mx-auto w-24 h-24 mb-4"
+            >
+            <p class="text-xl mt-2 text-brand-text font-medium">Simply Existing, Effortlessly Glowing</p>
+        </header>
+
+        <!-- Product Card and Checkout Form -->
+        <section class="bg-white p-8 rounded-lg shadow-xl mb-12 border border-brand-accent/50">
+            <div class="md:flex md:space-x-8">
+                
+                <!-- Product Visuals and Info -->
+                <div class="md:w-1/2 mb-6 md:mb-0">
+                    <!-- IMPORTANT: Image path updated for deployment (assumes images/cm-face-mist.png exists) -->
+                    <img 
+                        src="images/cm-face-mist.png" 
+                        alt="CM Face Mist Product" 
+                        class="w-full h-auto rounded-lg mb-4 object-cover"
+                    >
+                    <h2 class="text-3xl font-bold text-brand-text mb-2">CM Face Mist</h2>
+                    <!-- Price is set here -->
+                    <p class="text-3xl font-extrabold text-brand-text">R160.00</p>
+                </div>
+
+                <!-- Order/Delivery Form Section -->
+                <div class="md:w-1/2 p-6 bg-gray-50 rounded-lg border border-brand-accent/30">
+                    <h3 class="text-xl font-bold text-brand-text mb-4">Secure Your Order</h3>
+                    <p class="text-sm text-gray-600 mb-6">Enter your delivery details below. You will be redirected to PayFast for secure payment.</p>
+
+                    <!-- Form for Delivery Data Collection -->
+                    <form id="checkoutForm" 
+                        action="https://formsubmit.co/info@bycm.co.za" 
+                        method="POST" 
+                        onsubmit="handleCheckout(event)">
+                        
+                        <!-- Hidden field for product reference -->
+                        <input type="hidden" name="Product" value="CM Face Mist (R160)">
+                        <!-- UPDATED: This is the constructed PayFast URL used for the redirect -->
+                        <input type="hidden" name="_next" value="https://payment.payfast.io/eng/process?cmd=_paynow&receiver=22644501&amount=160&item_name=CM%20face%20mist">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_subject" value="NEW CM Face Mist Order - Delivery Details">
+
+
+                        <div class="mb-4">
+                            <label for="full_name" class="block text-sm font-medium text-brand-text">Full Name</label>
+                            <input type="text" id="full_name" name="Full Name" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-brand-accent focus:border-brand-accent text-brand-text">
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="address" class="block text-sm font-medium text-brand-text">Full Delivery Address</label>
+                            <textarea id="address" name="Full Delivery Address" rows="3" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-brand-accent focus:border-brand-accent text-brand-text"></textarea>
+                        </div>
+
+                        <div class="mb-6">
+                            <label for="contact_number" class="block text-sm font-medium text-brand-text">Contact Number</label>
+                            <input type="tel" id="contact_number" name="Contact Number" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-brand-accent focus:border-brand-accent text-brand-text" placeholder="e.g., 082 123 4567">
+                        </div>
+
+                        <!-- Checkout Button styled to match the muted aesthetic -->
+                        <button type="submit" class="w-full py-3 px-4 border border-brand-accent/80 rounded-md shadow-sm text-lg font-medium text-brand-text bg-brand-accent hover:bg-brand-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-accent transition duration-150 ease-in-out">
+                            Proceed to PayFast Checkout
+                        </button>
+                        
+                    </form>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- LLM Feature: Ingredient Explainer -->
+        <section class="mb-12 p-6 bg-white rounded-lg shadow-xl border border-brand-accent/50">
+            <h3 class="text-xl font-bold text-brand-text mb-4">✨ Ask Gemini: Ingredient Deep Dive</h3>
+            <p class="text-sm text-gray-600 mb-4">Curious about an ingredient? Type any ingredient from our list (e.g., 'Glycerin') to get a simple, helpful explanation.</p>
+            
+            <div class="flex space-x-2">
+                <input type="text" id="ingredientInput" placeholder="Enter an ingredient name..." 
+                       class="flex-grow px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-brand-accent focus:border-brand-accent text-brand-text">
+                <button id="explainBtn" onclick="getIngredientExplanation()" 
+                        class="px-4 py-2 bg-brand-accent hover:bg-brand-accent/80 rounded-md text-brand-text font-medium transition duration-150">
+                    Explain
+                </button>
+            </div>
+            
+            <div id="explanationOutput" class="mt-4 p-3 bg-brand-background/30 rounded-md text-sm text-brand-text hidden">
+                <p id="explanationText"></p>
+                <div id="loadingIndicator" class="hidden text-center mt-2">
+                     <span class="loader"></span> Loading explanation...
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Collapsible Information Table -->
+        <section class="mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <!-- Collapsible 1: Why You'll Love It -->
+                <div class="rounded-lg bg-brand-accent/50 overflow-hidden shadow-md">
+                    <button class="flex justify-between items-center w-full p-5 font-bold text-lg text-left text-brand-text" onclick="toggleCollapsible(this, 'loveItContent')">
+                        WHY YOU'LL LOVE IT
+                        <span class="transform transition-transform duration-300" id="loveItIcon">
+                             <!-- Arrow Up Icon -->
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                        </span>
+                    </button>
+                    <div id="loveItContent" class="collapsible-content bg-white p-5">
+                        <ul class="list-disc list-inside text-sm text-gray-700 space-y-2">
+                            <li>**Instant Radiance & All-Day Hydration:** Wake up your skin, combat dryness, and lock in moisture for a plump, comfortable feel.</li>
+                            <li>**Soothes & Balances:** Calms irritated skin and helps to harmonise natural oils for a refined, even tone.</li>
+                            <li>**Versatile Skin Prep & Finish:** Perfect for priming your skin before makeup, setting your look with a natural glow, or simply revitalising your complexion throughout the day.</li>
+                            <li>**Antioxidant Boost:** Provides a protective shield against daily environmental stressors.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Collapsible 2: How To Use -->
+                <div class="rounded-lg bg-brand-accent/50 overflow-hidden shadow-md">
+                    <button class="flex justify-between items-center w-full p-5 font-bold text-lg text-left text-brand-text" onclick="toggleCollapsible(this, 'howToUseContent')">
+                        HOW TO USE
+                        <span class="transform transition-transform duration-300" id="howToUseIcon">
+                            <!-- Arrow Up Icon -->
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                        </span>
+                    </button>
+                    <div id="howToUseContent" class="collapsible-content bg-white p-5">
+                        <p class="text-sm text-gray-700">Our Hydrating Face Mist is a simple, multi-purpose essential for your routine. Shake well before each use. Hold the bottle 15-20cm from your face, close your eyes, and spritz 2-3 times. Mist before moisturising to help your skin better absorb the product. Mist after makeup to set your look and give you a dewy, effortless finish. Mist throughout the day for a quick, mindful refresh and a boost of hydration. A mindful moment for your skin, anytime, anywhere.</p>
+                    </div>
+                </div>
+
+                <!-- Collapsible 3: Ingredients -->
+                <div class="rounded-lg bg-brand-accent/50 overflow-hidden shadow-md">
+                    <button class="flex justify-between items-center w-full p-5 font-bold text-lg text-left text-brand-text" onclick="toggleCollapsible(this, 'ingredientsContent')">
+                        INGREDIENTS
+                        <span class="transform transition-transform duration-300" id="ingredientsIcon">
+                            <!-- Arrow Up Icon -->
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg>
+                        </span>
+                    </button>
+                    <div id="ingredientsContent" class="collapsible-content bg-white p-5">
+                        <p class="text-sm text-gray-700 font-semibold mb-2">Full Ingredients List:</p>
+                        <p class="text-sm text-gray-700">Aqua, Rosa Damascena Flower Water, Glycerin, Hamamelis Virginiana (Witch Hazel) Extract, Benzyl Alcohol, Dehydroacetic Acid, Sodium Hyaluronate, Camellia Sinensis Leaf Extract.</p>
+                        <p class="mt-4 text-xs text-gray-500">Always check the label on the product packaging for the most accurate and up-to-date ingredients list.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Image Gallery/Customer Stories Section -->
+        <section class="mb-12 text-center">
+            <h3 class="text-2xl font-bold text-brand-text mb-6">you + cm</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <!-- Image Placeholder 1 -->
+                <div class="bg-brand-accent/30 aspect-square rounded-lg flex items-center justify-center text-sm text-gray-600 border border-dashed border-brand-accent">
+                    ADD YOUR IMAGE
+                </div>
+                <!-- Image Placeholder 2 -->
+                <div class="bg-brand-accent/30 aspect-square rounded-lg flex items-center justify-center text-sm text-gray-600 border border-dashed border-brand-accent">
+                    ADD YOUR IMAGE
+                </div>
+                <!-- Image Placeholder 3 -->
+                <div class="bg-brand-accent/30 aspect-square rounded-lg flex items-center justify-center text-sm text-gray-600 border border-dashed border-brand-accent">
+                    ADD YOUR IMAGE
+                </div>
+                <!-- Image Placeholder 4 -->
+                <div class="bg-brand-accent/30 aspect-square rounded-lg flex items-center justify-center text-sm text-gray-600 border border-dashed border-brand-accent">
+                    ADD YOUR IMAGE
+                </div>
+            </div>
+            <p class="mt-4 text-sm text-gray-600">These placeholders are ready for your beautiful product and lifestyle images!</p>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-6 text-center text-sm text-gray-600 bg-brand-accent/20">
+        <p>&copy; 2025 BYCM. All rights reserved. | Simple. Effortless. Glowing.</p>
+    </footer>
+
+    <!-- JavaScript for Form, Collapsibles, and Gemini API -->
+    <script>
+        // Gemini API Configuration
+        const API_KEY = ""; // Kept empty as per instructions
+        const MODEL_NAME = 'gemini-2.5-flash-preview-09-2025';
+
+        // === Helper for robust API calls ===
+        async function fetchWithExponentialBackoff(url, options, maxRetries = 5) {
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (response.status !== 429) { // Not a rate limit error
+                        return response;
+                    }
+                    // If 429 (rate limit), wait and retry
+                    const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                } catch (error) {
+                    // Handle network errors, wait and retry
+                    const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+            throw new Error("Failed to fetch from API after multiple retries.");
+        }
+
+        // === Gemini Ingredient Explainer Logic ===
+        async function getIngredientExplanation() {
+            const inputElement = document.getElementById('ingredientInput');
+            const outputDiv = document.getElementById('explanationOutput');
+            const outputText = document.getElementById('explanationText');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const explainBtn = document.getElementById('explainBtn');
+
+            const ingredient = inputElement.value.trim();
+
+            if (!ingredient) {
+                outputText.textContent = "Please enter an ingredient name first.";
+                outputDiv.classList.remove('hidden');
+                return;
+            }
+
+            // Set UI to loading state
+            outputDiv.classList.remove('hidden');
+            outputText.textContent = "";
+            loadingIndicator.classList.remove('hidden');
+            explainBtn.disabled = true;
+            explainBtn.textContent = 'Explaining...';
+
+            const systemPrompt = `You are a concise, helpful skincare expert. Provide a short, single-paragraph explanation (max 3 sentences) of what the requested ingredient is, what it does for the skin, and why it is commonly used in face mists. Focus on consumer-friendly language and transparency.`;
+            const userQuery = `Explain the skincare ingredient: ${ingredient}`;
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+                // Use Google Search grounding to ensure factual accuracy
+                tools: [{ "google_search": {} }] 
+            };
+
+            try {
+                const response = await fetchWithExponentialBackoff(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API call failed with status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                const generatedText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                if (generatedText) {
+                    outputText.textContent = generatedText;
+                } else {
+                    outputText.textContent = "Sorry, I couldn't find a clear explanation for that ingredient right now. Please try another one!";
+                }
+
+            } catch (error) {
+                console.error("Gemini API Error:", error);
+                outputText.textContent = "A connection error occurred. Please check your network and try again.";
+            } finally {
+                // Reset UI state
+                loadingIndicator.classList.add('hidden');
+                explainBtn.disabled = false;
+                explainBtn.textContent = 'Explain';
+            }
+        }
+
+        // === Collapsible Logic ===
+        function toggleCollapsible(button, contentId) {
+            const content = document.getElementById(contentId);
+            const icon = button.querySelector('span');
+            
+            // Toggle the content
+            content.classList.toggle('active');
+
+            // Rotate the arrow icon
+            if (content.classList.contains('active')) {
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // === Form Submission and Redirect Logic ===
+        function handleCheckout(event) {
+            // Prevent the default form submission (which would send the user to FormSubmit's thank you page)
+            event.preventDefault(); 
+            
+            const form = event.target;
+            
+            // 1. Submit the form asynchronously to log the delivery data to info@bycm.co.za
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    // This header is recommended by FormSubmit for better AJAX handling
+                    'Accept': 'application/json' 
+                }
+            })
+            .then(response => {
+                // The URL is now read from the _next hidden input, which FormSubmit redirects to
+                const payfastLink = form.querySelector('input[name="_next"]').value;
+
+                if (response.ok) {
+                    console.log("Delivery details submitted successfully.");
+                    // 2. Redirect the user to the secure PayFast payment link
+                    window.location.href = payfastLink; 
+                    
+                } else {
+                    // Fallback if there's a problem with the form service (uses the LLM output box as a temporary message box)
+                    const outputText = document.getElementById('explanationText');
+                    const outputDiv = document.getElementById('explanationOutput');
+                    
+                    outputText.textContent = 'We had trouble recording your delivery details. We will still proceed to payment, but please contact us if you are worried!';
+                    outputDiv.classList.remove('hidden');
+
+                    window.location.href = payfastLink; // Attempt redirect anyway
+                }
+            })
+            .catch(error => {
+                console.error('Submission Error:', error);
+                // Fallback: Redirect to PayFast anyway to save the sale
+                const payfastLink = form.querySelector('input[name="_next"]').value;
+                window.location.href = payfastLink; 
+            });
+        }
+    </script>
+</body>
+</html>
